@@ -8,10 +8,12 @@
 
 void CreateBoard();
 void DisplayBoard();
+char GetPlayerChoice();
 
 int main(){
     CreateBoard();
     DisplayBoard();
+    GetPlayerChoice();
     return 0;
 }
 
@@ -27,7 +29,7 @@ void CreateBoard(){
     };
     // char output = board.at(1).at(2); // reference for indxing to a specific board position
 
-    for(int i =0; i < 3; i++){
+    for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
             myfile << board[i][j];
         }
@@ -50,4 +52,19 @@ void DisplayBoard(){
     else{
         std::cout << "Unable to open file. Please check file name for any mismatch." << std::endl;
     }
+}
+
+char GetPlayerChoice() {
+    DisplayBoard();
+    char playersChoice;
+
+    std::cout << "Where on the board would you like to place your marker? :" << std::endl;
+    std::cin >> playersChoice;
+    
+    if(playersChoice == 'X' || playersChoice == 'O') {
+        std::cout << "Invalid placement, please try again." << std::endl;
+        GetPlayerChoice();
+    }
+    return playersChoice;
+    
 }
