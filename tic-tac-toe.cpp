@@ -15,19 +15,6 @@ int main(){
     return 0;
 }
 
-void DisplayBoard() {
-    std::string line;
-    std::ifstream myfile ("board.txt");
-    if(myfile.is_open()) {
-        while(getline(myfile, line)) {
-            std::cout << line << '\n';
-        }
-        myfile.close();
-    }
-    else {
-        std::cout << "Can't open that file" << std::endl;
-    }
-}
 void CreateBoard(){
 
     std::ofstream myfile;
@@ -47,4 +34,20 @@ void CreateBoard(){
         myfile << std::endl;
     }
     myfile.close();
+}
+
+
+void DisplayBoard(){
+    std::string line = "";
+
+    std::fstream my_file("board.txt");
+    if(my_file.is_open()){
+        while(getline (my_file,line)){
+            std::cout << line << '\n';
+        }
+        my_file.close();
+    }
+    else{
+        std::cout << "Unable to open file. Please check file name for any mismatch." << std::endl;
+    }
 }
