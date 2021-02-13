@@ -1,14 +1,17 @@
 #include <vector>
 #include <iostream>
 #include <fstream>
+#include <string>
 
 
 
 
 void CreateBoard();
+void DisplayBoard();
 
 int main(){
     CreateBoard();
+    DisplayBoard();
     return 0;
 }
 
@@ -31,4 +34,21 @@ void CreateBoard(){
         myfile << std::endl;
     }
     myfile.close();
+}
+
+
+void DisplayBoard(){
+    std::string line = "";
+
+    std::fstream my_file("board.txt");
+    if(my_file.is_open()){
+        while(getline (my_file,line)){
+            std::cout << line;
+            std::cout << std::endl;
+        }
+        my_file.close();
+    }
+    else{
+        std::cout << "Unable to open file. Please check file name for any mismatch." << std::endl;
+    }
 }
