@@ -4,16 +4,22 @@
 #include <string>
 
 
-
+char player_turn = 'X';
 
 void CreateBoard();
 void DisplayBoard();
 char GetPlayerChoice();
+void PlaceMarker();
+
 
 int main(){
-    CreateBoard();
-    DisplayBoard();
-    GetPlayerChoice();
+    // CreateBoard(); // not needed since we have the function placeMarker reading txt file to get board.
+    // DisplayBoard();
+    int count = 0;
+    while(count < 9){
+        PlaceMarker();
+        count++;
+    }
     return 0;
 }
 
@@ -27,7 +33,6 @@ void CreateBoard(){
         {'4', '5', '6'},
         {'7', '8', '9'}
     };
-    // char output = board.at(1).at(2); // reference for indxing to a specific board position
 
     for(int i = 0; i < 3; i++){
         for(int j = 0; j < 3; j++){
@@ -42,12 +47,12 @@ void CreateBoard(){
 void DisplayBoard(){
     std::string line = "";
 
-    std::fstream my_file("board.txt");
-    if(my_file.is_open()){
-        while(getline (my_file,line)){
+    std::ifstream my_file_in("board.txt");
+    if(my_file_in.is_open()){
+        while(getline (my_file_in,line)){
             std::cout << line << '\n';
         }
-        my_file.close();
+        my_file_in.close();
     }
     else{
         std::cout << "Unable to open file. Please check file name for any mismatch." << std::endl;
@@ -65,6 +70,36 @@ char GetPlayerChoice() {
         std::cout << "Invalid placement, please try again." << std::endl;
         GetPlayerChoice();
     }
-    return playersChoice;
-    
+    return playersChoice;   
+}
+
+void PlaceMarker(){
+    char player_choice = GetPlayerChoice();
+    std::vector<std::vector<char>> board {
+        {'1', '2', '3'},
+        {'4', '5', '6'},
+        {'7', '8', '9'}
+    };
+
+    for(int i = 0; i < 3; i++){
+        for(int j = 0; j < 3; j++){
+            if(board[i][j] == player_choice){
+                board[i][j] = player_turn;
+            }
+        }
+    }
+
+
+
+    std::ofstream my_file_out;
+    my_file_out.open ("board.txt");
+
+    for(int m = 0; m < board.size(); m++){
+        for(int n = 0; n < board.size(); n++){
+            my_file_out << board[m][n];
+        }
+        my_file_out << std::endl;
+    }
+    my_file_out.close();
+
 }
